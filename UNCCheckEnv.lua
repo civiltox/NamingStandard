@@ -527,7 +527,14 @@ test("mousescroll", {})
 
 test("fireclickdetector", {}, function()
 	local detector = Instance.new("ClickDetector")
+	local hovered = false
+	local hoveredEvent = detector.MouseHoverEnter:Connect(function()
+		hovered = true
+	end)
 	fireclickdetector(detector, 50, "MouseHoverEnter")
+	task.wait() 
+	hoveredEvent:Disconnect()
+	assert(hovered, "Did not fire the click detector")
 end)
 
 test("getcallbackvalue", {}, function()
@@ -870,3 +877,4 @@ test("WebSocket.connect", {}, function()
 	end
 	ws:Close()
 end)
+
