@@ -183,6 +183,18 @@ test("hookfunction", {"replaceclosure"}, function()
 	assert(test ~= ref, "Original function should not be same as the reference")
 end)
 
+test("restorefunction", {"restoreclosure"}, function()
+	local function test()
+		return true
+	end
+	local ref = hookfunction(test, function()
+		return false
+	end)
+	assert(test() == false, "Hooked function should return false")
+	restorefunction(test)
+	assert(test() == true, "Restored function should return true")
+end)
+
 test("iscclosure", {}, function()
 	assert(iscclosure(print) == true, "Function 'print' should be a C closure")
 	assert(iscclosure(function() end) == false, "Executor function should not be a C closure")
