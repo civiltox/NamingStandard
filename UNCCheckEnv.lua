@@ -878,7 +878,7 @@ test("WebSocket.connect", {}, function()
 		OnMessage = {"table", "userdata"},
 		OnClose = {"table", "userdata"},
 	}
-	local ws = WebSocket.connect("ws://echo.websocket.events")
+	local ws = WebSocket.connect("wss://ws.postman-echo.com/raw")
 	assert(type(ws) == "table" or type(ws) == "userdata", "Did not return a table or userdata")
 	for k, v in pairs(types) do
 		if type(v) == "table" then
@@ -889,5 +889,6 @@ test("WebSocket.connect", {}, function()
 	end
 	ws:Close()
 end)
+
 
 
