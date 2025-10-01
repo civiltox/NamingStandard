@@ -44,7 +44,7 @@ local function test(name, aliases, callback)
 	
 		if #undefinedAliases > 0 then
 			undefined += 1
-			warn(`⚠️ Undefined alias{#undefinedAliases > 1 and "es" or ""} of {name}: {table.concat(undefinedAliases, ", ")}`)
+			warn(`⚠️ Undefined global alias{#undefinedAliases > 1 and "es" or ""} of {name}: {table.concat(undefinedAliases, ", ")}`)
 		end
 
 		running -= 1
