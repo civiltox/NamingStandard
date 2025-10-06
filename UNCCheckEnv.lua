@@ -603,6 +603,7 @@ end)
 
 test("gethui", {}, function()
 	assert(typeof(gethui()) == "Instance", "Did not return an Instance")
+	assert(gethui() == gethui(), "Should not be unique between calls")
 end)
 
 test("getinstances", {}, function()
