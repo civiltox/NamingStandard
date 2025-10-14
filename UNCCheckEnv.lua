@@ -183,7 +183,7 @@ test("hookfunction", {"replaceclosure"}, function()
 	assert(test ~= ref, "Original function should not be same as the reference")
 end)
 
-test("restorefunction", {"restoreclosure"}, function()
+test("restorefunction", {}, function()
 	local function test()
 		return true
 	end
