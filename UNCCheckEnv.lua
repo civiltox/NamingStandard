@@ -764,6 +764,7 @@ test("getloadedmodules", {}, function()
 end)
 
 test("getrenv", {}, function()
+	assert(getrenv()._G, "Missing _G key")
 	assert(_G ~= getrenv()._G, "The variable _G in the executor is identical to _G in the game")
 end)
 
@@ -890,6 +891,3 @@ test("WebSocket.connect", {}, function()
 	end
 	ws:Close()
 end)
-
-
-
