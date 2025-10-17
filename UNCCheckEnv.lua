@@ -1,5 +1,7 @@
 local passes, fails, undefined = 0, 0, 0
 local running = 0
+local resultString = ""
+local logConnection
 
 local function getGlobal(path)
 	local value = getfenv(0)
@@ -51,11 +53,15 @@ local function test(name, aliases, callback)
 	end)
 end
 
--- Header and summary
+-- Header, summary, and log connection
+logConnection = cloneref(game:GetService("LogService")).MessageOut:Connect(function(Output)
+	resultString = resultString .. Output .. "\n"
+end)
 
 print("\n")
 
 print("UNC Environment Check")
+print(`👤 Executor: {identifyexecutor and identifyexecutor() or "Unknown"}`)
 print("✅ - Pass, ⛔ - Fail, ⏺️ - No test, ⚠️ - Missing aliases\n")
 
 task.defer(function()
@@ -70,6 +76,33 @@ task.defer(function()
 	print("✅ Tested with a " .. rate .. "% success rate (" .. outOf .. ")")
 	print("⛔ " .. fails .. " tests failed")
 	print("⚠️ " .. undefined .. " globals are missing aliases")
+
+	task.wait()
+
+	logConnection:Disconnect()
+	assert(request, "Can't upload your result due to lack of a request function")
+	local uploadResponse = request({
+		Url = "https://backend.ianhon.com/hastebin/create",
+		Method ="POST",
+		Headers = {["Content-Type"] = "application/json"},
+		Body = cloneref(game:GetService("HttpService")):JSONEncode({
+			signature = "",
+			content = {
+				{"main", tostring(resultString)}
+			}
+		}),
+	})
+	if not uploadResponse or not uploadResponse.Success then
+		warn(`Failed to upload your result!\nStatus code: {uploadResponse and uploadResponse.StatusCode or "unknown"}\nBody: {uploadResponse and uploadResponse.Body or "empty"}`)
+		return
+	end
+	if setclipboard then
+		setclipboard(`https://hastebin.ianhon.com/{string.format("%x", tonumber(uploadResponse.Body))}`)
+		print("Successfully uploaded your result! The link to your result is in our clipboard now.")
+	else
+		print("Successfully uploaded your result!")
+		print(`Result link: https://hastebin.ianhon.com/{string.format("%x", tonumber(uploadResponse.Body))}`)
+	end
 end)
 
 -- Cache
