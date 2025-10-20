@@ -98,7 +98,7 @@ task.defer(function()
 	end
 	if setclipboard then
 		setclipboard(`https://hastebin.ianhon.com/{string.format("%x", tonumber(uploadResponse.Body))}`)
-		print("Successfully uploaded your result! The link to your result is in our clipboard now.")
+		print("Successfully uploaded your result! The link to your result is in your clipboard now.")
 	else
 		print("Successfully uploaded your result!")
 		print(`Result link: https://hastebin.ianhon.com/{string.format("%x", tonumber(uploadResponse.Body))}`)
