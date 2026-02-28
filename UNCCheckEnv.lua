@@ -197,7 +197,7 @@ end)
 test("getcallingscript", {})
 
 test("getscriptclosure", {"getscriptfunction"}, function()
-	local _require = getrenv().require or require
+	local _require = getrenv and getrenv().require or require
 	local module = game:GetService("CoreGui").RobloxGui.Modules.Common.AvatarChatConstants
 	local constants = _require(module)
 	local generated = getscriptclosure(module)()
