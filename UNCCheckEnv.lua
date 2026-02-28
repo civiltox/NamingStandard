@@ -2,6 +2,7 @@ local passes, fails, undefined = 0, 0, 0
 local running = 0
 local resultString = ""
 local logConnection
+local cloneref = cloneref or function(Service) return Service end
 
 local function getGlobal(path)
 	local value = getfenv(0)
